@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuHome"
+        android:icon="@drawable/imgtrangchu"
+        android:title="Trang chủ" />
+    <item
+        android:id="@+id/menuStatistic"
+        android:icon="@drawable/imgthongke"
+        android:title="Thống kê" />
+    <item android:title="Quản lý">
+        <menu>
+            <item
+                android:id="@+id/menuDrinkTable"
+                android:icon="@drawable/imgban"
+                android:title="Bàn" />
+            <item
+                android:id="@+id/menuMenu"
+                android:icon="@drawable/imgmenuu"
+                android:title="Menu" />
+            <item
+                android:id="@+id/menuStaff"
+                android:icon="@drawable/imgnhanvien"
+                android:title="Nhân viên" />
+
+
+        </menu>
+
+    </item>
+
+
+
+
+</menu>
