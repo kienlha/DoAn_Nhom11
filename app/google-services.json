@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "163074533663",
+    "firebase_url": "https://database-coffee-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "database-coffee",
+    "storage_bucket": "database-coffee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163074533663:android:71edd0c53465513158282a",
+        "android_client_info": {
+          "package_name": "com.example.doannhom11"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163074533663-t7h73778vjc9es4hsgo747lj34llpss9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.doannhom11",
+            "certificate_hash": "f3ecf4159ea52e44b66dc52f52e79427e3cdc301"
+          }
+        },
+        {
+          "client_id": "163074533663-uugg6sp8fc79tm0cesvdonnuoenk03nr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcWa3FU8XDWQFqKwaxVMetFYZt4hvuFhc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "163074533663-uugg6sp8fc79tm0cesvdonnuoenk03nr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
