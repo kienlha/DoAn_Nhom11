@@ -23,7 +23,7 @@
             android:layout_height="68dp"
             android:scaleType="centerCrop"
             android:background="@drawable/round_bg"
-            android:src="@drawable/logo_coffee"
+            android:src="@drawable/logo_coffee2"
             app:riv_oval="true">
 
         </com.makeramen.roundedimageview.RoundedImageView>
