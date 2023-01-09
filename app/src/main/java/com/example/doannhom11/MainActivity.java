@@ -29,6 +29,62 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+       unitListen();
 
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                show.setVisibility(view.INVISIBLE);
+                hide.setVisibility(view.VISIBLE);
+            }
+        });
+        hide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                hide.setVisibility(view.INVISIBLE);
+                show.setVisibility(view.VISIBLE);
+            }
+        });
+    }
+     private void unitListen()
+    {
+        btnSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickSignIn();
+            }
+        });
+    }
+    private void onClickSignIn() {
+        String email= Email.getText().toString().trim();
+        String password = Password.getText().toString().trim();
+        if(email.isEmpty()||password.isEmpty())
+        {
+            Toast.makeText(MainActivity.this, "Thông tin thiếu",
+                    Toast.LENGTH_SHORT).show();
+        }
+       else
+        {
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                                startActivity(intent);
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                finishAffinity();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(MainActivity.this, "Vui lòng kiểm tra lại thông tin",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
     }
 }
