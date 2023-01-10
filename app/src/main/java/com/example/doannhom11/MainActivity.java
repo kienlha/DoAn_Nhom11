@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView btnSignUp;
     Button btnSignIn;
+    ImageView hide, show;
+    EditText edtMail, edtPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
