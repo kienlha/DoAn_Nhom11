@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView btnSignUp;
     Button btnSignIn;
+    ImageView hide, show;
+    EditText edtMail, edtPass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
