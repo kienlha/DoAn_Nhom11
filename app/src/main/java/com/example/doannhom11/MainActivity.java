@@ -88,8 +88,9 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intent= new Intent(MainActivity.this, MainActivity2.class);
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(MainActivity.this, "Vui lòng kiểm tra lại thông tin.",
-                                        Toast.LENGTH_SHORT).show();
+                                //Test customToast
+                                CustomToast.e(MainActivity.this, "Vui lòng kiểm tra lại thông tin.",
+                                        Toast.LENGTH_SHORT);
                             }
                         }
                     });
