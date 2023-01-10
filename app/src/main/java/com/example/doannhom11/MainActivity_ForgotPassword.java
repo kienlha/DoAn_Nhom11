@@ -47,31 +47,37 @@ public class MainActivity_ForgotPassword extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-    private void unitListen()
-    {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickForgotPassword();
             }
         });
+
     }
     private void onClickForgotPassword() {
 
         String email= Email.getText().toString().trim();
+        if(email.isEmpty()||email==null)
         {
+            Toast.makeText(MainActivity_ForgotPassword.this,"Vui lòng nhập email", Toast.LENGTH_SHORT).show();
+        }
+        else {
             FirebaseAuth auth = FirebaseAuth.getInstance();
             auth.sendPasswordResetEmail(email)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(MainActivity_ForgotPassword.this,"Email đã gửi", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity_ForgotPassword.this, "Đã gửi đến Email", Toast.LENGTH_SHORT).show();
+                            } else
+                            {
+                                Toast.makeText(MainActivity_ForgotPassword.this,"Vui lòng kiểm tra lại email", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
         }
+
     }
 
 }

@@ -24,7 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView btnSignUp;
+    TextView btnSignUp, btnForgotPass;
     Button btnSignIn;
     ImageView hide, show;
     EditText edtMail, edtPass;
@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         show = findViewById(R.id.showpw);
         edtMail = findViewById(R.id.inputUsername);
         edtPass = findViewById(R.id.inputPassword);
+        btnForgotPass = findViewById(R.id.forgotPassword);
+        //Chuyển đến đăng kí
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Hiện mật khẩu
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 hide.setVisibility(view.VISIBLE);
             }
         });
+        //Ẩn mật khẩu
         hide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,14 +66,29 @@ public class MainActivity extends AppCompatActivity {
                 show.setVisibility(view.VISIBLE);
             }
         });
+        //Kiểm tra user đã đăng nhập từ trước chưa
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent a = new Intent(getApplicationContext(), MainActivity2.class);
+            startActivity(a);
+            finish();
+        }
+        //Đăng nhập
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onClickSignUp();
             }
         });
+        //Chuyển đến quên mật khẩu
+        btnForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MainActivity_ForgotPassword.class);
+                startActivity(intent);
+            }
+        });
     }
-
+    //Hàm đăng nhập
     private void onClickSignUp() {
         String email = edtMail.getText().toString().trim();
         String password = edtPass.getText().toString().trim();
