@@ -8,6 +8,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -45,7 +47,32 @@ public class MainActivity2 extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        // khi click vào nút logout thì sẽ thoát ra khỏi app
+        findViewById(R.id.imageLogout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity2.this);
+                builder.setIcon(R.drawable.ic_baseline_exit_to_app_blue);
+                builder.setTitle("Đăng xuất");
+                builder.setMessage("Bạn muốn đăng xuất?");
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
+            }
+        });
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.getHeaderView(0).findViewById(R.id.tvNameCf);
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tvNameCf)).setText("TEN_CUAHANG");
