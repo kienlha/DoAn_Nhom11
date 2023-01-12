@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4E5C4"
+    android:orientation="vertical"
+    tools:context=".Fragment_menu_item">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:id="@+id/edtcoffee"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_bg_btn_white"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="9dp"
+        android:hint="Tìm kiếm"
+        android:padding="10dp"
+        android:textColorHint="@color/dennhat"
+        android:textSize="16sp" />
+    <ListView
+        android:id="@+id/lvcoffee"
+        android:scrollbars="none"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:layout_marginTop="12dp"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</LinearLayout>

@@ -19,12 +19,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity_SignUp extends AppCompatActivity {
 
     ImageView btnBack;
     EditText Email, Password, PasswordAgain, ShopName;
     Button btnSignUp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +73,19 @@ public class MainActivity_SignUp extends AppCompatActivity {
         {}
         else {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                //test
+//                                Map<String, Object> map = new HashMap<>();
+//                                map.put("TEN_CUAHANG", ShopName);
+//                                map.put("NGAY_DK", Calendar.getInstance().getTime());
+//                                db.collection("CUAHANG").document(task.getResult().getUser().getUid()).set(map);
+                                //test
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(MainActivity_SignUp.this, MainActivity2.class);
                                 startActivity(intent);
