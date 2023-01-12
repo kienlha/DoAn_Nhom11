@@ -1,14 +1,360 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout tools:context=".Fragment_statistic"
+    android:orientation="vertical" android:background="#F4E5C4"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    tools:context=".Fragment_statistic">
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+
+
+    -<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/layoutToolBar">
+
+
+    -<LinearLayout
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:paddingTop="12dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textStyle="bold|italic"
+        android:textSize="20dp"
+        android:text="Thống kê "/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textStyle="bold|italic"
+        android:textSize="20dp"
+        android:text="Bán hàng "
+        android:textColor="@color/color_main"
+        android:layout_marginLeft="4dp"/>
+
+</LinearLayout>
+
+
+    -<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginTop="6dp">
+
+
+    -<RelativeLayout
+    android:background="@color/trangduc"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+
+    -<HorizontalScrollView
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:scrollbarThumbHorizontal="@null"
+    android:layout_marginStart="0dp"
+    android:layout_alignParentStart="true">
+
+
+    -<RadioGroup
+    android:orientation="horizontal"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:id="@+id/radioGr"
+    android:layout_marginLeft="16dp"
+    android:weightSum="5"
+    android:layout_marginRight="16dp"
+    android:layout_marginVertical="10dp">
+
+    <RadioButton
+        android:background="@drawable/my_radio_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/one_week"
+        android:textSize="14sp"
+        android:text="7 ngày trước"
+        android:textColor="@drawable/radio_text"
+        android:layout_marginRight="12dp"
+        android:padding="8dp"
+        android:gravity="center"
+        android:button="@android:color/transparent"
+        android:layout_weight="1"/>
+
+    <RadioButton
+        android:background="@drawable/my_radio_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/four_week"
+        android:textSize="14sp"
+        android:text="Tháng trước"
+        android:textColor="@drawable/radio_text"
+        android:layout_marginRight="12dp"
+        android:padding="8dp"
+        android:gravity="center"
+        android:button="@android:color/transparent"
+        android:layout_weight="1"/>
+
+    <RadioButton
+        android:background="@drawable/my_radio_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/lastyear"
+        android:textSize="14sp"
+        android:text="Năm trước"
+        android:textColor="@drawable/radio_text"
+        android:layout_marginRight="12dp"
+        android:padding="8dp"
+        android:gravity="center"
+        android:button="@android:color/transparent"
+        android:layout_weight="1"/>
+
+    <RadioButton
+        android:background="@drawable/my_radio_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/ytd"
+        android:textSize="14sp"
+        android:text="Đầu năm đến nay"
+        android:textColor="@drawable/radio_text"
+        android:padding="8dp"
+        android:gravity="center"
+        android:button="@android:color/transparent"
+        android:layout_weight="1"/>
+
+    <RadioButton
+        android:background="@drawable/my_radio_button"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="14sp"
+        android:text="hh"
+        android:textColor="@drawable/radio_text"
+        android:padding="8dp"
+        android:gravity="center"
+        android:button="@android:color/transparent"
+        android:layout_weight="1"
+        android:visibility="invisible"/>
+
+</RadioGroup>
+
+</HorizontalScrollView>
+
+</RelativeLayout>
+
+
+    -<androidx.cardview.widget.CardView
+    android:layout_height="174dp"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginRight="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+
+    -<LinearLayout
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:text="Tổng cộng:"
+        android:textColor="@color/dennhat"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+
+    -<LinearLayout
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/summarytv"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:text="0"
+        android:textColor="@color/light_blue"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:textSize="28sp"
+        android:text="đ"
+        android:textColor="@color/light_blue"
+        android:layout_marginLeft="4dp"/>
+
+</LinearLayout>
+
+    <View
+        android:background="@color/light_gray"
+        android:layout_height="3px"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="12dp"/>
+
+
+    -<GridLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:columnCount="2">
+
+
+    -<LinearLayout
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:layout_columnWeight="1"
+    android:layout_column="0">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="16sp"
+        android:text="Trung bình"
+        android:layout_marginVertical="10dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+    -<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/avgtv"
+        android:textSize="20sp"
+        android:text="0"
+        android:textColor="@color/dennhat"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:text="đ"
+        android:textColor="@color/dennhat"
+        android:layout_marginLeft="4dp"/>
+
+</LinearLayout>
+
+</LinearLayout>
+
+
+    -<LinearLayout
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:layout_columnWeight="1"
+    android:layout_column="1">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="16sp"
+        android:text="Cao nhất"
+        android:layout_marginVertical="10dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+    -<LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center_horizontal">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/peaktv"
+        android:textSize="20sp"
+        android:text="0"
+        android:textColor="@color/dennhat"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:text="đ"
+        android:textColor="@color/dennhat"
+        android:layout_marginLeft="4dp"/>
+
+</LinearLayout>
+
+</LinearLayout>
+
+</GridLayout>
+
+</LinearLayout>
+
+</androidx.cardview.widget.CardView>
+
+
+    -<androidx.cardview.widget.CardView
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginRight="16dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_height="340dp"
+        android:layout_width="match_parent"
+        android:id="@+id/barChart"
+        android:layout_margin="12dp"/>
+
+</androidx.cardview.widget.CardView>
+
+
+    -<LinearLayout
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="8dp">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="16sp"
+        android:text="* "
+        android:textColor="@color/red"/>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textStyle="italic"
+        android:textSize="16sp"
+        android:text="Đơn vị: VNĐ"
+        android:textColor="@color/dennhat"/>
+
+</LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>
