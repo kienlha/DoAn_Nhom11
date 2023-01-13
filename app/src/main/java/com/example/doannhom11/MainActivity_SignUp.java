@@ -1,14 +1,10 @@
 package com.example.doannhom11;
 
-import static androidx.fragment.app.FragmentManager.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,7 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
@@ -27,77 +22,68 @@ import java.util.Map;
 
 public class MainActivity_SignUp extends AppCompatActivity {
 
-    ImageView btnBack;
-    EditText Email, Password, PasswordAgain, ShopName;
-    Button btnSignUp;
-
+    FirebaseAuth mAuth;
+    ImageView btnBacked;
+    EditText edtUser, edtPw, edtPwAgain, edtShopName;
+    FirebaseFirestore db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_sign_up);
-        btnBack = findViewById(R.id.btnBacked);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity_SignUp.this, MainActivity.class);
-                startActivity(intent);
-            }
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+        edtUser = (EditText) findViewById(R.id.edtUsername);
+        edtPw = (EditText) findViewById(R.id.edtNewPw);
+        edtPwAgain = (EditText) findViewById(R.id.edtPwAgain);
+        edtShopName = (EditText) findViewById(R.id.edtShopName);
+        btnBacked = (ImageView) findViewById(R.id.btnBacked);
+        btnBacked.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity_SignUp.this, MainActivity.class);
+            startActivity(intent);
         });
-        unitUI();
-        initUIListen();
-    }
-    private void unitUI()
-    {
-        Email= findViewById(R.id.edtUsername);
-        Password = findViewById(R.id.edtNewPw);
-        btnSignUp = findViewById(R.id.btnInputSignUp);
-        PasswordAgain = findViewById(R.id.edtPwAgain);
-        ShopName = findViewById(R.id.edtShopName);
-    }
-    private void initUIListen()
-    {
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickSignUp();
-            }
+
+        ((Button) findViewById(R.id.btnInputSignUp)).setOnClickListener(view -> {
+            RegisterUser();
         });
     }
 
-    private void onClickSignUp() {
-        String email= Email.getText().toString().trim();
-        String password = Password.getText().toString().trim();
-        String repassword = PasswordAgain.getText().toString().trim();
-        String shopname = ShopName.getText().toString().trim();
-        if(email.isEmpty()||password.isEmpty()||repassword.isEmpty()||shopname.isEmpty())
-        {}
-        else {
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//            FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private void RegisterUser() {
+        String userName = edtUser.getText().toString();
+        String passWord = edtPw.getText().toString();
+        String checkPass = edtPwAgain.getText().toString();
+        String shopName = edtShopName.getText().toString();
 
-            mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                //test
-//                                Map<String, Object> map = new HashMap<>();
-//                                map.put("TEN_CUAHANG", ShopName);
-//                                map.put("NGAY_DK", Calendar.getInstance().getTime());
-//                                db.collection("CUAHANG").document(task.getResult().getUser().getUid()).set(map);
-                                //test
-                                // Sign in success, update UI with the signed-in user's information
-                                Intent intent = new Intent(MainActivity_SignUp.this, MainActivity2.class);
-                                startActivity(intent);
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                finishAffinity();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Toast.makeText(MainActivity_SignUp.this, "Đăng kí thất bại",
-                                        Toast.LENGTH_SHORT).show();
-                            }
+        if(userName.isEmpty() || passWord.isEmpty()|| checkPass.isEmpty() || shopName.isEmpty()){
+            CustomToast.e(getApplicationContext(), "Thông tin còn thiếu", Toast.LENGTH_SHORT);
+        }
+        else{
+            if(passWord.equals(checkPass)){
+                mAuth.createUserWithEmailAndPassword(userName, passWord).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("TEN_CUAHANG", shopName);
+                            map.put("NGAY_DK", Calendar.getInstance().getTime());
+
+                            db.collection("CUAHANG").document(task.getResult().getUser().getUid()).set(map);
+
+                            CustomToast.i(getApplicationContext(), "Đăng kí thành công", Toast.LENGTH_SHORT);
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
                         }
-                    });
+                        else{
+                            CustomToast.e(getApplicationContext(), "Đăng kí thất bại " + task.getException().getMessage(), Toast.LENGTH_SHORT);
+                        }
+                    }
+                });
+            }
+            else {
+                CustomToast.e(getApplicationContext(), "Kiểm tra lại mật khẩu", Toast.LENGTH_SHORT);
+            }
         }
     }
+
 }
