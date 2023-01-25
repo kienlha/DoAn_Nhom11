@@ -16,4 +16,39 @@
         android:name="com.example.doannhom11.Fragment_table"
         android:label="fragment_table"
         tools:layout="@layout/fragment_table" />
+    <fragment
+        android:id="@+id/fragment_menu_item"
+        android:name="com.example.doannhom11.Fragment_menu_item"
+        android:label="fragment_menu_item"
+        tools:layout="@layout/fragment_menu_item" />
+    <fragment
+        android:id="@+id/fragment_menu"
+        android:name="com.example.doannhom11.Fragment_menu"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/fragment_item_edit"
+        android:name="com.example.doannhom11.Fragment_item_edit"
+        android:label="fragment_item_edit"
+        tools:layout="@layout/fragment_item_edit" />
+    <fragment
+        android:id="@+id/fragment_order"
+        android:name="com.example.doannhom11.Fragment_order"
+        android:label="fragment_order"
+        tools:layout="@layout/fragment_order" />
+    <fragment
+        android:id="@+id/fragment_statistic"
+        android:name="com.example.doannhom11.Fragment_statistic"
+        android:label="fragment_statistic"
+        tools:layout="@layout/fragment_statistic" />
+    <fragment
+        android:id="@+id/fragment_bill"
+        android:name="com.example.doannhom11.Fragment_bill"
+        android:label="fragment_bill"
+        tools:layout="@layout/fragment_bill" />
+    <fragment
+        android:id="@+id/fragment_item_info"
+        android:name="com.example.doannhom11.Fragment_item_info"
+        android:label="fragment_item_info"
+        tools:layout="@layout/fragment_item_info" />
 </navigation>
