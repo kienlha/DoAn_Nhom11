@@ -51,4 +51,9 @@
         android:name="com.example.doannhom11.Fragment_item_info"
         android:label="fragment_item_info"
         tools:layout="@layout/fragment_item_info" />
+    <fragment
+        android:id="@+id/fragment_staff"
+        android:name="com.example.doannhom11.Fragment_staff"
+        android:label="fragment_staff"
+        tools:layout="@layout/fragment_staff" />
 </navigation>
