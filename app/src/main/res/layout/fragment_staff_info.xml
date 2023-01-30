@@ -1,14 +1,411 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#E6E6E6"
+    android:paddingTop="12dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment_staff_info">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="288dp"
+        android:src="@drawable/round_bg_white_min">
+    </ImageView>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="36dp"
+                    android:paddingBottom="8dp"
+                    android:src="@drawable/ic_delete" />
+                <TextView
+                    android:text="Xóa"
+                    android:textSize="15sp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="35dp"
+                    android:text="Sửa"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/btnEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingLeft="36dp"
+                    android:paddingBottom="8dp"
+                    android:src="@drawable/ic_baseline_edit_24" />
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            app:riv_oval="true"
+            android:id="@+id/avatar"
+            android:padding="2dp"
+            android:background="@drawable/round_bg_white"
+            android:src="@drawable/atvimg"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="centerCrop"
+            android:layout_width="112dp"
+            android:layout_height="112dp">
+        </com.makeramen.roundedimageview.RoundedImageView>
+        <TextView
+            android:id="@+id/edtName"
+            android:layout_gravity="center"
+            android:text="Misthy"
+            android:layout_marginTop="4dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:weightSum="8"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_weight="4"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Chức vụ"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dennhat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <!--                Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
+                <!--                1. Admin-->
+                <!--                2. Staff-->
+                <!--                <Spinner-->
+                <!--                    android:layout_marginTop="8dp"-->
+                <!--                    android:id="@+id/spinner"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content" />-->
+                <TextView
+                    android:id="@+id/tvPosition"
+                    android:text="Nhân viên"
+                    android:textSize="18sp"
+                    android:lines="2"
+                    android:gravity="center"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="12dp"
+                    android:textColor="@color/dennhat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_weight="0"
+                android:layout_gravity="center"
+                android:background="#ccc"
+                android:layout_width="2dp"
+                android:layout_height="30dp"/>
+
+            <LinearLayout
+                android:layout_weight="4"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="Giới tính"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/dennhat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <!--   Giới tính,Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
+                <!--   1. Nam-->
+                <!--   2. Nữ-->
+                <!--   3. Khác-->
+                <!--                <Spinner-->
+                <!--                    android:layout_marginTop="8dp"-->
+                <!--                    android:id="@+id/spinner2"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content" />-->
+                <TextView
+                    android:id="@+id/tvGender"
+                    android:text="Nữ"
+                    android:gravity="center"
+                    android:lines="2"
+                    android:textSize="18sp"
+                    android:textColor="@color/dennhat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imgEmail"
+                android:padding="12dp"
+                android:src="@drawable/ic_email"
+                android:gravity="center"
+                android:background="@drawable/circle_img_blue_dam"
+                android:textColor="@color/white"
+                android:layout_width="56dp"
+                android:layout_height="56dp"/>
+            <ImageView
+                android:id="@+id/imgMessage"
+                android:padding="12dp"
+                android:src="@drawable/ic_message"
+                android:gravity="center"
+                android:background="@drawable/circle_img"
+                android:layout_marginLeft="32dp"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:layout_width="56dp"
+                android:layout_height="56dp"/>
+            <ImageView
+                android:id="@+id/imgPhone"
+                android:padding="12dp"
+                android:src="@drawable/ic_phone1"
+                android:gravity="center"
+                android:background="@drawable/circle_img_green_nhat"
+                android:layout_marginLeft="32dp"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:layout_width="56dp"
+                android:layout_height="56dp"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_marginTop="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/ic_cmnd">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="8dp"
+                        android:text="CCCD/CMND:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/tvCCCD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="123"
+                        android:textColor="@color/dennhat"
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_cake"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+                    <TextView
+                        android:layout_marginRight="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày sinh:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"
+                        />
+                    <TextView
+                        android:id="@+id/tvDob"
+                        android:textStyle="bold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="10/10/2002"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic__date_range"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+                    <TextView
+                        android:layout_marginRight="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày vào làm:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"
+                        />
+                    <TextView
+                        android:id="@+id/tvBeginDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:textColor="@color/dennhat"
+                        android:text="10/10/2022"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_marginRight="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Số điện thoại:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"
+                        />
+                    <TextView
+                        android:id="@+id/tvPhone1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="0968686868"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_baseline_mail_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_marginRight="8dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp"
+                        />
+                    <TextView
+                        android:id="@+id/tvHSL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:text="0"
+                        android:textColor="@color/dennhat"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
 
 </FrameLayout>
