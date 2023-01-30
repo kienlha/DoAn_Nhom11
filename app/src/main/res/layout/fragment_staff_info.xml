@@ -301,9 +301,6 @@
                         android:textColor="@color/dennhat"
                         android:textSize="18sp" />
                 </LinearLayout>
-
-
-
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_marginTop="12dp"
@@ -400,12 +397,7 @@
                         android:textSize="18sp" />
                 </LinearLayout>
 
-
             </LinearLayout>
-
         </ScrollView>
-
     </LinearLayout>
-
-
 </FrameLayout>

@@ -61,11 +61,7 @@
                 android:src="@drawable/ic_camera_alt"
                 app:riv_oval="true">
             </com.makeramen.roundedimageview.RoundedImageView>
-
-
         </RelativeLayout>
-
-
         <EditText
             android:id="@+id/edtName"
             android:layout_gravity="center"
@@ -354,10 +350,5 @@
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
-
     </LinearLayout>
-
-
-
 </FrameLayout>
