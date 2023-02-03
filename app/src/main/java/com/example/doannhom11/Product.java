@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,13 +49,14 @@ public class Product {
         this.gia = gia;
     }
 }
-class ProductAdapter extends BaseAdapter
+class ProductAdapter extends BaseAdapter implements Filterable
 {
     TextView tvname,tvmasp,tvprice;
     ImageView ava;
     private Context m_Context;
     private ArrayList<Product> m_array,temp_array;
     private int m_Layout;
+    CustomFilter cs;
     public ProductAdapter(Context context, int layout, ArrayList<Product> arrayList)
     {
         m_Context = context;
@@ -78,6 +81,59 @@ class ProductAdapter extends BaseAdapter
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = LayoutInflater.from(m_Context).inflate(m_Layout,null);
+        tvname = (TextView) view.findViewById(R.id.tvname);
+        tvmasp = (TextView) view.findViewById(R.id.tvmasp);
+        tvprice = (TextView) view.findViewById(R.id.tvprice);
+        ava = (ImageView) view.findViewById(R.id.imageDrink);
+
+        tvname.setText(m_array.get(i).getTensp());
+        tvprice.setText(m_array.get(i).getGia()+" đ"); // gia'
+        tvmasp.setText("");
         return view;
+    }
+    @Override
+    public Filter getFilter() {
+        if (cs==null)
+        {
+            cs = new CustomFilter();
+        }
+        return cs;
+    }
+    class CustomFilter extends Filter
+    {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+
+            if (constraint!= null &&  constraint.length()>0)
+            {
+                constraint = constraint.toString().toUpperCase();
+                ArrayList<Product> filters = new ArrayList<>(); // bộ lọc
+
+                for (int i=0 ; i<temp_array.size();i++)
+                {
+                    if (temp_array.get(i).getTensp().toUpperCase().contains(constraint))
+                    {
+                        Product product = new Product(temp_array.get(i).getMasp(),
+                                temp_array.get(i).getTensp(),temp_array.get(i).getGia());
+                        filters.add(product);
+                    }
+                    results.count = filters.size();
+                    results.values = filters;
+                }
+            }
+            else
+            {
+                results.count = temp_array.size();
+                results.values = temp_array;
+            }
+            return results;
+        }
+        @Override
+        protected void publishResults(CharSequence charSequence,FilterResults filterResults )
+        {
+            m_array = (ArrayList<Product>) filterResults.values;
+            notifyDataSetChanged();
+        }
     }
 }
