@@ -180,7 +180,100 @@ public class Fragment_table extends Fragment {
         });
 
 
+        tableList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(refreshLayout.isRefreshing()) return;
 
+                menuBuilder = new MenuBuilder(getContext());
+                MenuInflater inflater = new MenuInflater(getContext());
+
+                if(table.get(i).Get()){
+                    inflater.inflate(R.menu.menu_occupied, menuBuilder);
+                }
+                else{
+                    inflater.inflate(R.menu.menu_empty, menuBuilder);
+                }
+
+                MenuPopupHelper menuPopupHelper = new MenuPopupHelper(getContext(), menuBuilder, view);
+                menuPopupHelper.setForceShowIcon(true);
+
+                menuBuilder.setCallback(new MenuBuilder.Callback() {
+                    @Override
+                    public boolean onMenuItemSelected(@NonNull MenuBuilder menu, @NonNull MenuItem item) {
+                        switch (item.getItemId())
+                        {
+                            case R.id.tinhTien:
+                            {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("key1", table.get(i).getId());
+                                Navigation.findNavController(view).navigate(R.id.action_fragment_table_to_fragment_bill, bundle);
+                                break;
+                            }
+                            case R.id.goiMon:
+                            {
+                                Bundle bund = new Bundle();
+                                bund.putString("soban", table.get(i).getId());
+                                Navigation.findNavController(view).navigate(R.id.action_fragment_table_to_fragment_menu,bund);
+                                break;
+                            }
+                            case R.id.xoaBan:
+                            {
+                                final Dialog dialog = new Dialog(getContext());
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                dialog.setContentView(R.layout.layout_payment);
+
+                                ((TextView)dialog.findViewById(R.id.textView2)).setText("Bạn có muốn xóa bàn số " + table.get(i).getIndex());
+                                ((Button)dialog.findViewById(R.id.btnNo)).setText("Không");
+                                ((Button)dialog.findViewById(R.id.btnThanhToan)).setText("Có");
+                                Window window = dialog.getWindow();
+                                if(window == null){
+                                    return true;
+                                }
+
+                                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                                WindowManager.LayoutParams windowAttribute = window.getAttributes();
+                                windowAttribute.gravity = Gravity.CENTER;
+                                window.setAttributes(windowAttribute);
+
+                                ((Button)dialog.findViewById(R.id.btnNo)).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                ((Button)dialog.findViewById(R.id.btnThanhToan)).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        db.collection("TableStatus").document(table.get(i).getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                CustomToast.w(getActivity(), "Đã xóa bàn số " + table.get(i).getIndex() + "!", Toast.LENGTH_LONG);
+                                                CreateList();
+                                            }
+                                        });
+                                        dialog.dismiss();
+                                    }
+                                });
+                                dialog.show();
+                                break;
+                            }
+                        }
+                        return true;
+                    }
+
+                    @Override
+                    public void onMenuModeChange(@NonNull MenuBuilder menu) {
+
+                    }
+                });
+
+                menuPopupHelper.show();
+            }
+        });
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
