@@ -154,22 +154,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtShopName"
         app:layout_constraintVertical_bias="0.094" />
-    <!--app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />-->
-
-    <!--<TextView
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="32dp"
-        android:text="Forgot Password?"
-        android:textColor="#FFB72B"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.94"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/inputPassword" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
