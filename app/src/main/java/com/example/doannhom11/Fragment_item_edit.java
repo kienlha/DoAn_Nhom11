@@ -121,7 +121,67 @@ public class Fragment_item_edit extends Fragment {
             ImageLoader.Upload("images/goods/", imgDrink);
             // push du lieu len firebase storage
         });
+        Bundle data = getArguments();
 
+        switch (data.getString("temp"))
+        {
+            case "coffee":
+                query = "/SANPHAM/CAPHE/DANHSACHCAPHE";
+                break;
+            case "trasua":
+                query = "/SANPHAM/TRASUA/DANHSACHTRASUA";
+                break;
+            case "sinhto":
+                query = "/SANPHAM/SINHTO/DANHSACHSINHTO";
+                break;
+            case "topping":
+                query = "/SANPHAM/TRANGMIENG/DANHSACHTRANGMIENG";
+                break;
+            case "topping1":
+                query = "/SANPHAM/TOPPING/DANHSACHTOPPING";
+                break;
+        }
+        ((Button)v.findViewById(R.id.btnSaveDrink)).setOnClickListener(view ->{
+
+            String tensp = edtNameDrink.getText().toString(),
+                    gia = edtPrice.getText().toString();
+
+            if (tensp.isEmpty() || gia.isEmpty())
+            {
+                CustomToast.e(getActivity(), "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT);
+                return;
+            }
+
+            long giasp = Integer.parseInt(gia);
+
+            if (data.getString("Masp") == null) // add mode
+            {
+                Map<String, Object> drink = new HashMap<>();
+                drink.put("TEN", tensp);
+                drink.put("GIA", giasp);
+
+                db.collection(query).add(drink).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        if (task.isSuccessful())
+                        {
+                            ImageLoader.Upload("images/goods/" + task.getResult().getId() + ".jpg", imgDrink);
+                        }
+                    }
+                });
+
+            }
+
+            CustomToast.i(getContext(), "Lưu thành công", Toast.LENGTH_SHORT);
+
+            getActivity().onBackPressed();
+        });
+        ((ImageView)v.findViewById(R.id.btnBack2)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
         return v;
     }
 }

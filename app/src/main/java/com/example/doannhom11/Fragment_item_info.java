@@ -2,11 +2,24 @@ package com.example.doannhom11;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,11 +67,67 @@ public class Fragment_item_info extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+    String query = "";
+    FirebaseAuth mAuth;
+    DocumentReference db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_item_info, container, false);
+        View v = inflater.inflate(R.layout.fragment_item_info, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
+
+        Bundle DrinkInfo = getArguments();
+
+        switch (DrinkInfo.getString("temp"))
+        {
+            case "coffee":
+                query = "/SANPHAM/CAPHE/DANHSACHCAPHE";
+                break;
+            case "trasua":
+                query = "/SANPHAM/TRASUA/DANHSACHTRASUA";
+                break;
+            case "sinhto":
+                query = "/SANPHAM/SINHTO/DANHSACHSINHTO";
+                break;
+            case "topping":
+                query = "/SANPHAM/TRANGMIENG/DANHSACHTRANGMIENG";
+                break;
+            case "topping1":
+                query = "/SANPHAM/TOPPING/DANHSACHTOPPING";
+                break;
+        }
+        db.collection(query).document(DrinkInfo.getString("Masp"))
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            DocumentSnapshot snap =  task.getResult();
+
+                            ((TextView)v.findViewById(R.id.tvNameDrinks)).setText(snap.getString("TEN"));
+                            ((TextView)v.findViewById(R.id.tvGia)).setText(""+snap.getLong("GIA")+" đ");
+                        }
+                    }
+                });
+
+        ((ImageView)v.findViewById(R.id.btnDelDrink)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.collection(query).document(DrinkInfo.getString("Masp")).delete();
+                FirebaseStorage.getInstance().getReference().child("images/goods/"+ DrinkInfo.getString("Masp" + ".jpg")).delete();
+                CustomToast.i(getContext(), "Xóa thành công", Toast.LENGTH_SHORT);
+                getActivity().onBackPressed();
+            }
+        });
+
+        ImageLoader.Load( "images/goods/" + DrinkInfo.getString("Masp") + ".jpg", ((ImageView)v.findViewById(R.id.avtDrink)));
+
+        ((ImageView)v.findViewById(R.id.btnEditDrink)).setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.action_fragment_item_info_to_fragment_item_edit, DrinkInfo);
+        });
+        return v;
     }
 }
