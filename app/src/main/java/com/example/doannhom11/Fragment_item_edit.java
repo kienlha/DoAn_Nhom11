@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -141,6 +142,22 @@ public class Fragment_item_edit extends Fragment {
                 query = "/SANPHAM/TOPPING/DANHSACHTOPPING";
                 break;
         }
+        if (data.getString("Masp") != null) //edit mode
+        {
+            // hien thi thong tin co the thay doi duoc
+            db.collection(query).document(data.getString("Masp"))
+                    .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot snap = task.getResult();
+                                edtNameDrink.setText(snap.getString("TEN"));
+                                edtPrice.setText( ""+snap.getLong("GIA"));
+                            }
+                        }
+                    });
+            ImageLoader.Load("images/goods/" + data.getString("Masp") + ".jpg", ((ImageView)v.findViewById(R.id.imgEditDink)));
+        }
         ((Button)v.findViewById(R.id.btnSaveDrink)).setOnClickListener(view ->{
 
             String tensp = edtNameDrink.getText().toString(),
@@ -169,7 +186,15 @@ public class Fragment_item_edit extends Fragment {
                         }
                     }
                 });
-
+            }
+            else // edit mode
+            {
+                Map<String, Object> drink = new HashMap<>();
+                drink.put("TEN", tensp);
+                drink.put("GIA", giasp);
+                String id = getArguments().getString("Masp");
+                db.collection(query).document(id).set(drink);
+                ImageLoader.Upload("images/goods/" + id + ".jpg", imgDrink);
             }
 
             CustomToast.i(getContext(), "Lưu thành công", Toast.LENGTH_SHORT);

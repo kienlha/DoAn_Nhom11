@@ -1,5 +1,6 @@
 package com.example.doannhom11;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +64,28 @@ public class Fragment_menu_item extends Fragment {
         }
     }
 
+    ListView lvcoffee;
+    EditText edtsearch;
+    String tam;
+    String tableId;
+    FirebaseAuth mAuth;
+    DocumentReference db;
+    @SuppressLint("Range")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu_item, container, false);
+        View v = inflater.inflate(R.layout.fragment_menu_item, container, false);
+
+        edtsearch = (EditText) v.findViewById(R.id.edtcoffee);
+        lvcoffee = (ListView) v.findViewById(R.id.lvcoffee);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
+
+        Bundle bundle = getArguments();
+        tam = bundle.getString("temp");
+        tableId = bundle.getString("soban");
+        return v;
     }
 }
