@@ -110,6 +110,9 @@
         <action
             android:id="@+id/action_fragment_menu_item_to_fragment_menu"
             app:destination="@id/fragment_menu" />
+        <action
+            android:id="@+id/action_fragment_menu_item_to_fragment_order_notopping"
+            app:destination="@id/fragment_order_notopping" />
     </fragment>
     <fragment
         android:id="@+id/fragment_order"
@@ -160,6 +163,18 @@
             app:enterAnim="@anim/from_right" />
         <action
             android:id="@+id/action_fragment_menu_item2_to_fragment_menu"
+            app:destination="@id/fragment_menu" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_order_notopping"
+        android:name="com.example.doannhom11.Fragment_order_notopping"
+        android:label="Fragment_order_notopping"
+        tools:layout="@layout/fragment_order_notopping">
+        <action
+            android:id="@+id/action_fragment_order_notopping_to_fragment_home"
+            app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_order_notopping_to_fragment_menu"
             app:destination="@id/fragment_menu" />
     </fragment>
 
