@@ -10,12 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Fragment_home#newInstance} factory method to
@@ -62,12 +56,9 @@ public class Fragment_home extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     ListView listDrinks;
     SwipeRefreshLayout refreshLayout;
-    DocumentReference db;
-    FirebaseAuth mAuth;
-
+    OrderDrinksAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,17 +66,13 @@ public class Fragment_home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         listDrinks = (ListView) view.findViewById(R.id.lvDrinkStack);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayoutHome);
-
-        mAuth = FirebaseAuth.getInstance();
-
-        db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
-
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(false);
             }
         });
+
         return view;
     }
 }
