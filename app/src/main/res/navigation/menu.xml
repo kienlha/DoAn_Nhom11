@@ -5,15 +5,177 @@
     android:id="@+id/menu"
     app:startDestination="@id/fragment_home">
 
-
     <fragment
         android:id="@+id/fragment_home"
         android:name="com.example.doannhom11.Fragment_home"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_fragment_home_to_fragment_statistic"
+            app:destination="@id/fragment_statistic" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_statistic"
+        android:name="com.example.doannhom11.Fragment_statistic"
+        android:label="fragment_statistic"
+        tools:layout="@layout/fragment_statistic" >
+        <action
+            android:id="@+id/action_fragment_statistic_to_fragment_table"
+            app:destination="@id/fragment_table" />
+    </fragment>
     <fragment
         android:id="@+id/fragment_table"
         android:name="com.example.doannhom11.Fragment_table"
         android:label="fragment_table"
-        tools:layout="@layout/fragment_table" />
+        tools:layout="@layout/fragment_table" >
+        <action
+            android:id="@+id/action_fragment_table_to_fragment_menu"
+            app:destination="@id/fragment_menu" />
+        <action
+            android:id="@+id/action_fragment_table_to_fragment_bill"
+            app:destination="@id/fragment_bill"
+            app:enterAnim="@anim/zoom_in" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_menu"
+        android:name="com.example.doannhom11.Fragment_menu"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_fragment_menu_to_fragment_table"
+            app:destination="@id/fragment_table" />
+        <action
+            android:id="@+id/action_fragment_menu_to_fragment_menu_item"
+            app:destination="@id/fragment_menu_item"
+            app:enterAnim="@anim/zoom_in" />
+        <action
+            android:id="@+id/action_fragment_menu_to_fragment_menu_item2"
+            app:destination="@id/fragment_menu_item2"
+            app:enterAnim="@anim/zoom_in" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_staff"
+        android:name="com.example.doannhom11.Fragment_staff"
+        android:label="fragment_staff"
+        tools:layout="@layout/fragment_staff" >
+        <action
+            android:id="@+id/action_fragment_staff_to_fragment_staff_info"
+            app:destination="@id/fragment_staff_info"
+            app:enterAnim="@anim/zoom_in" />
+        <action
+            android:id="@+id/action_fragment_staff_to_fragment_staff_edit"
+            app:destination="@id/fragment_staff_edit"
+            app:enterAnim="@anim/from_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_staff_info"
+        android:name="com.example.doannhom11.Fragment_staff_info"
+        android:label="fragment_staff_info"
+        tools:layout="@layout/fragment_staff_info" >
+        <action
+            android:id="@+id/action_fragment_staff_info_to_fragment_staff_edit"
+            app:destination="@id/fragment_staff_edit"
+            app:enterAnim="@anim/from_right" />
+        <action
+            android:id="@+id/action_fragment_staff_info_to_fragment_staff"
+            app:destination="@id/fragment_staff" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_bill"
+        android:name="com.example.doannhom11.Fragment_bill"
+        android:label="fragment_bill"
+        tools:layout="@layout/fragment_bill" >
+        <action
+            android:id="@+id/action_fragment_bill_to_fragment_table"
+            app:destination="@id/fragment_table"
+            app:enterAnim="@anim/from_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_staff_edit"
+        android:name="com.example.doannhom11.Fragment_staff_edit"
+        android:label="fragment_staff_edit"
+        tools:layout="@layout/fragment_staff_edit" >
+        <action
+            android:id="@+id/action_fragment_staff_edit_to_fragment_staff"
+            app:destination="@id/fragment_staff" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_menu_item"
+        android:name="com.example.doannhom11.Fragment_menu_item"
+        android:label="fragment_menu_item"
+        tools:layout="@layout/fragment_menu_item" >
+        <action
+            android:id="@+id/action_fragment_menu_item_to_fragment_order"
+            app:destination="@id/fragment_order" />
+        <action
+            android:id="@+id/action_fragment_menu_item_to_fragment_menu"
+            app:destination="@id/fragment_menu" />
+        <action
+            android:id="@+id/action_fragment_menu_item_to_fragment_order_notopping"
+            app:destination="@id/fragment_order_notopping" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_order"
+        android:name="com.example.doannhom11.Fragment_order"
+        android:label="fragment_order"
+        tools:layout="@layout/fragment_order" >
+        <action
+            android:id="@+id/action_fragment_order_to_fragment_home"
+            app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_order_to_fragment_menu"
+            app:destination="@id/fragment_menu" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_item_info"
+        android:name="com.example.doannhom11.Fragment_item_info"
+        android:label="fragment_item_info"
+        tools:layout="@layout/fragment_item_info" >
+        <action
+            android:id="@+id/action_fragment_item_info_to_fragment_item_edit"
+            app:destination="@id/fragment_item_edit"
+            app:enterAnim="@anim/from_right" />
+        <action
+            android:id="@+id/action_fragment_item_info_to_fragment_menu_item2"
+            app:destination="@id/fragment_menu_item2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_item_edit"
+        android:name="com.example.doannhom11.Fragment_item_edit"
+        android:label="fragment_item_edit"
+        tools:layout="@layout/fragment_item_edit" >
+        <action
+            android:id="@+id/action_fragment_item_edit_to_fragment_menu_item2"
+            app:destination="@id/fragment_menu_item2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_menu_item2"
+        android:name="com.example.doannhom11.Fragment_menu_item2"
+        android:label="fragment_menu_item2"
+        tools:layout="@layout/fragment_menu_item2" >
+        <action
+            android:id="@+id/action_fragment_menu_item2_to_fragment_item_info"
+            app:destination="@id/fragment_item_info"
+            app:enterAnim="@anim/zoom_in" />
+        <action
+            android:id="@+id/action_fragment_menu_item2_to_fragment_item_edit"
+            app:destination="@id/fragment_item_edit"
+            app:enterAnim="@anim/from_right" />
+        <action
+            android:id="@+id/action_fragment_menu_item2_to_fragment_menu"
+            app:destination="@id/fragment_menu" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_order_notopping"
+        android:name="com.example.doannhom11.Fragment_order_notopping"
+        android:label="Fragment_order_notopping"
+        tools:layout="@layout/fragment_order_notopping">
+        <action
+            android:id="@+id/action_fragment_order_notopping_to_fragment_home"
+            app:destination="@id/fragment_home" />
+        <action
+            android:id="@+id/action_fragment_order_notopping_to_fragment_menu"
+            app:destination="@id/fragment_menu" />
+    </fragment>
+
 </navigation>

@@ -12,8 +12,8 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,10 +28,10 @@ import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_menu_item#newInstance} factory method to
+ * Use the {@link Fragment_menu_item2#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_menu_item extends Fragment implements TextWatcher {
+public class Fragment_menu_item2 extends Fragment implements TextWatcher {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,7 +42,7 @@ public class Fragment_menu_item extends Fragment implements TextWatcher {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_menu_item() {
+    public Fragment_menu_item2() {
         // Required empty public constructor
     }
 
@@ -52,11 +52,11 @@ public class Fragment_menu_item extends Fragment implements TextWatcher {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_menu_item.
+     * @return A new instance of fragment Fragment_menu_item2.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_menu_item newInstance(String param1, String param2) {
-        Fragment_menu_item fragment = new Fragment_menu_item();
+    public static Fragment_menu_item2 newInstance(String param1, String param2) {
+        Fragment_menu_item2 fragment = new Fragment_menu_item2();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,31 +73,29 @@ public class Fragment_menu_item extends Fragment implements TextWatcher {
         }
     }
 
-    ListView lvcoffee;
-    EditText edtsearch;
-    String tam, theloai;
-    String tableId;
+    ProductAdapterUpdate adapter;
+    ArrayList<Product> arrayList;
+    ListView lvcoffeeno;
+    EditText edtcoffeeno;
+    String tam;
     FirebaseAuth mAuth;
     DocumentReference db;
-    ProductAdapter adapter;
-    ArrayList<Product> arrayList;
 
-    @SuppressLint("Range")
+    @SuppressLint({"RestrictedApi", "Range"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_menu_item, container, false);
+        View v = inflater.inflate(R.layout.fragment_menu_item2, container, false);
 
-        edtsearch = (EditText) v.findViewById(R.id.edtcoffee);
-        lvcoffee = (ListView) v.findViewById(R.id.lvcoffee);
+        edtcoffeeno = (EditText) v.findViewById(R.id.edtcoffeeno);
+        lvcoffeeno = (ListView) v.findViewById(R.id.lvcoffeeno);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
 
-        Bundle bundle = getArguments();
+        Bundle bundle = getArguments(); // có cái temp: tức là chọn vào cái nào của menu và số bàn
         tam = bundle.getString("temp");
-        tableId = bundle.getString("soban");
         String query = "";
 
         switch (tam)
@@ -118,15 +116,16 @@ public class Fragment_menu_item extends Fragment implements TextWatcher {
                 query = "/SANPHAM/TOPPING/DANHSACHTOPPING";
                 break;
         }
-        theloai = query;
+
+        edtcoffeeno.addTextChangedListener(this);
         db.collection(query).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful())
                 {
                     arrayList = new ArrayList<>();
-                    adapter = new ProductAdapter(getActivity(),R.layout.layout_menu_item_notable,arrayList);
-                    lvcoffee.setAdapter(adapter);
+                    adapter = new ProductAdapterUpdate(getActivity(),R.layout.layout_menu_item_notable2,arrayList);
+                    lvcoffeeno.setAdapter(adapter);
 
                     for (QueryDocumentSnapshot data : task.getResult())
                     {
@@ -137,33 +136,33 @@ public class Fragment_menu_item extends Fragment implements TextWatcher {
                         arrayList.add(new Product(MASP, TENSP, GIA.intValue()));
                     }
                     adapter.notifyDataSetChanged();
-
                 }
             }
         });
 
-        edtsearch.addTextChangedListener(this);
+        ((ImageView)v.findViewById(R.id.btnAddDrink)).setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.action_fragment_menu_item2_to_fragment_item_edit);
+        });
 
-        lvcoffee.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvcoffeeno.setOnItemClickListener((adapterView, view, i, l) -> {
+
+            bundle.putString("Masp", ((Product)adapterView.getAdapter().getItem(i)).getMasp());
+            Navigation.findNavController(view).navigate(R.id.action_fragment_menu_item2_to_fragment_item_info, bundle);
+        });
+
+        ((ImageView)v.findViewById(R.id.btnAddDrink)).setOnClickListener(view -> {
+            bundle.putString("Masp", null);
+            Navigation.findNavController(view).navigate(R.id.action_fragment_menu_item2_to_fragment_item_edit, bundle);
+        });
+
+        // Xử lý nút back
+        ((ImageView)v.findViewById(R.id.backno)).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Bundle bund = new Bundle();
-
-                String Masp = ((Product)adapterView.getAdapter().getItem(i)).getMasp();
-                String Tensp = ((Product)adapterView.getAdapter().getItem(i)).getTensp();
-                int Gia = ((Product)adapterView.getAdapter().getItem(i)).getGia();
-                bund.putString("temp", tam);
-                bund.putString("MASP",Masp);
-                bund.putString("TENSP",Tensp);
-                bund.putInt("GIA",Gia);
-                bund.putString("soban",tableId);
-                bund.putString("theloai", theloai);
-                if (tam.equals("trasua")) // contains: chứa chuỗi
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_menu_item_to_fragment_order,bund);
-                else
-                    Navigation.findNavController(view).navigate(R.id.action_fragment_menu_item_to_fragment_order_notopping,bund);
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_fragment_menu_item2_to_fragment_menu);
             }
         });
+
         return v;
     }
 

@@ -1,12 +1,47 @@
 package com.example.doannhom11;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +90,233 @@ public class Fragment_table extends Fragment {
         }
     }
 
+    GridView tableList;
+    ArrayList<MyBool> table;
+    TableAdapter adapter;
+    MenuBuilder menuBuilder;
+    DocumentReference db;
+    FirebaseAuth mAuth;
+
+    ImageView addImg;
+    SwipeRefreshLayout refreshLayout;
+
+    @SuppressLint("RestrictedApi")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_table, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_table, container, false);
+        tableList = (GridView) view.findViewById(R.id.tableList);
+        addImg = (ImageView)view.findViewById(R.id.btnAddTable);
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayoutTable);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
+
+        addImg.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog = new Dialog(getContext());
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.layout_table_add);
+
+                Window window = dialog.getWindow();
+                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                if(window == null){
+                    return;
+                }
+
+                ((Button)dialog.findViewById(R.id.btnCancel)).setOnClickListener(view1 ->  {
+                    dialog.dismiss();
+                });
+
+                ((Button)dialog.findViewById(R.id.btnAdd)).setOnClickListener(view2 -> {
+                    String s = ((EditText)dialog.findViewById(R.id.edtTableIndex)).getText().toString();
+                    if (!s.isEmpty())
+                    {
+                        int index = Integer.parseInt(s);
+                        db.collection("TableStatus").whereEqualTo("Index", index).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful())
+                                {
+                                    for (DocumentSnapshot data : task.getResult())
+                                    {
+                                        CustomToast.e(getActivity(), "Bàn số " + index + " đã có sẵn", Toast.LENGTH_SHORT);
+                                        return;
+                                    }
+                                    Map<String, Object> map = new HashMap<>();
+                                    map.put("Index", index);
+                                    db.collection("TableStatus").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            Map<String, Object> map = new HashMap<>();
+                                            map.put("status", false);
+                                            db.collection("/TableStatus/").document(task.getResult().getId()).update(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    CreateList();
+                                                }
+                                            });
+                                        }
+                                    });
+                                    dialog.dismiss();
+                                }
+                                else
+                                    CustomToast.e(getActivity(), task.getException().getMessage(), Toast.LENGTH_LONG);
+                            }
+                        });
+                    }
+                    else
+                        CustomToast.e(getActivity(), "Vui lòng nhập số bàn!", Toast.LENGTH_SHORT);
+                });
+
+                dialog.show();
+
+                CreateList();
+            }
+        });
+
+
+        tableList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if(refreshLayout.isRefreshing()) return;
+
+                menuBuilder = new MenuBuilder(getContext());
+                MenuInflater inflater = new MenuInflater(getContext());
+
+                if(table.get(i).Get()){
+                    inflater.inflate(R.menu.menu_occupied, menuBuilder);
+                }
+                else{
+                    inflater.inflate(R.menu.menu_empty, menuBuilder);
+                }
+
+                MenuPopupHelper menuPopupHelper = new MenuPopupHelper(getContext(), menuBuilder, view);
+                menuPopupHelper.setForceShowIcon(true);
+
+                menuBuilder.setCallback(new MenuBuilder.Callback() {
+                    @Override
+                    public boolean onMenuItemSelected(@NonNull MenuBuilder menu, @NonNull MenuItem item) {
+                        switch (item.getItemId())
+                        {
+                            case R.id.tinhTien:
+                            {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("key1", table.get(i).getId());
+                                Navigation.findNavController(view).navigate(R.id.action_fragment_table_to_fragment_bill, bundle);
+                                break;
+                            }
+                            case R.id.goiMon:
+                            {
+                                Bundle bund = new Bundle();
+                                bund.putString("soban", table.get(i).getId());
+                                Navigation.findNavController(view).navigate(R.id.action_fragment_table_to_fragment_menu,bund);
+                                break;
+                            }
+                            case R.id.xoaBan:
+                            {
+                                final Dialog dialog = new Dialog(getContext());
+                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                dialog.setContentView(R.layout.layout_payment);
+
+                                ((TextView)dialog.findViewById(R.id.textView2)).setText("Bạn có muốn xóa bàn số " + table.get(i).getIndex());
+                                ((Button)dialog.findViewById(R.id.btnNo)).setText("Không");
+                                ((Button)dialog.findViewById(R.id.btnThanhToan)).setText("Có");
+                                Window window = dialog.getWindow();
+                                if(window == null){
+                                    return true;
+                                }
+
+                                window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                                window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                                WindowManager.LayoutParams windowAttribute = window.getAttributes();
+                                windowAttribute.gravity = Gravity.CENTER;
+                                window.setAttributes(windowAttribute);
+
+                                ((Button)dialog.findViewById(R.id.btnNo)).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                    }
+                                });
+
+                                ((Button)dialog.findViewById(R.id.btnThanhToan)).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        db.collection("TableStatus").document(table.get(i).getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                CustomToast.w(getActivity(), "Đã xóa bàn số " + table.get(i).getIndex() + "!", Toast.LENGTH_LONG);
+                                                CreateList();
+                                            }
+                                        });
+                                        dialog.dismiss();
+                                    }
+                                });
+                                dialog.show();
+                                break;
+                            }
+                        }
+                        return true;
+                    }
+
+                    @Override
+                    public void onMenuModeChange(@NonNull MenuBuilder menu) {
+
+                    }
+                });
+
+                menuPopupHelper.show();
+            }
+        });
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                CreateList();
+                refreshLayout.setRefreshing(false);
+            }
+        });
+
+        CreateList();
+
+        return view;
+    }
+
+    private void CreateList() {
+
+        db.collection("/TableStatus").orderBy("Index", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    table = new ArrayList<>();
+                    adapter = new TableAdapter(getContext(), table);
+                    tableList.setAdapter(adapter);
+                    for (QueryDocumentSnapshot data : task.getResult()) {
+                        MyBool val = new MyBool(data.getId(), false, Integer.parseInt(data.getLong("Index")+""));
+                        table.add(val);
+
+                        db.collection("TableStatus/" + data.getId() + "/DrinksOrder").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task1) {
+                                for (DocumentSnapshot data : task1.getResult())
+                                {
+                                    val.Set(true);
+                                    adapter.notifyDataSetChanged();
+                                    break;
+                                }
+
+                            }
+                        });
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4E5C4"
+    android:orientation="vertical"
+    tools:context=".Fragment_menu_item2">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="12dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/backno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back" />
+            <ImageView
+                android:id="@+id/btnAddDrink"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/round_bg_btn"
+                android:gravity="center"
+                android:padding="4dp"
+                android:src="@drawable/ic_add"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/edtcoffeeno"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_bg_btn_white"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="9dp"
+        android:hint="Tìm kiếm"
+        android:padding="10dp"
+        android:textColorHint="@color/dennhat"
+        android:textSize="16sp" />
+    <ListView
+        android:id="@+id/lvcoffeeno"
+        android:scrollbars="none"
+        android:paddingLeft="11dp"
+        android:paddingRight="11dp"
+        android:layout_marginTop="12dp"
+        android:divider="@null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</LinearLayout>

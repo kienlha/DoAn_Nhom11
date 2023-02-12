@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         String password = edtPass.getText().toString().trim();
         if(email.isEmpty()||email==null||password.isEmpty()||password==null)
         {
-            Toast.makeText(MainActivity.this, "Vui lòng điền đầy đủ thông tin đăng nhập",
-                    Toast.LENGTH_SHORT).show();
+            CustomToast.e(MainActivity.this, "Vui lòng điền đầy đủ thông tin đăng nhập",
+                    Toast.LENGTH_SHORT);
         }
         else {
             FirebaseAuth mAuth = FirebaseAuth.getInstance();
