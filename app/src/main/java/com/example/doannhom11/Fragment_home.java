@@ -10,6 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Fragment_home#newInstance} factory method to
@@ -58,13 +62,19 @@ public class Fragment_home extends Fragment {
     }
     ListView listDrinks;
     SwipeRefreshLayout refreshLayout;
-    OrderDrinksAdapter adapter;
+    DocumentReference db;
+    FirebaseAuth mAuth;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         listDrinks = (ListView) view.findViewById(R.id.lvDrinkStack);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
+
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeLayoutHome);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
