@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,38 +26,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class MainActivity2 extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    ImageView btnSignOut;
+
     DocumentReference db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        //Đăng xuất
-        btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity2.this);
-                builder.setIcon(R.drawable.ic_baseline_exit_to_app_blue);
-                builder.setTitle("Đăng xuất");
-                builder.setMessage("Bạn muốn đăng xuất?");
-                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        mAuth.signOut();
-                        Intent intent = new Intent(MainActivity2.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                builder.show();
-            }
-        });
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
         if(mAuth.getCurrentUser() == null){
@@ -74,7 +47,32 @@ public class MainActivity2 extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+        // Dang xuat
+        findViewById(R.id.imageLogout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity2.this);
+                builder.setIcon(R.drawable.ic_baseline_exit_to_app_blue);
+                builder.setTitle("Đăng xuất");
+                builder.setMessage("Bạn muốn đăng xuất?");
+                builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        mAuth.signOut();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                });
+                builder.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
+            }
+        });
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.getHeaderView(0).findViewById(R.id.tvNameCf);
         ((TextView)navigationView.getHeaderView(0).findViewById(R.id.tvNameCf)).setText("TEN_CUAHANG");
