@@ -1,12 +1,39 @@
 package com.example.doannhom11;
 
+
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +82,162 @@ public class Fragment_order_notopping extends Fragment {
         }
     }
 
+    TextView name,soluong,gia,m,l;
+    Button btnthemngay;
+    Boolean bl,bm;
+    ImageView add,remove, image;
+    int sl;
+    Bundle bund;
+    String size = "M", theloai, masp, tableId;
+    final Calendar instance = Calendar.getInstance();
+    FirebaseAuth mAuth;
+    DocumentReference db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_notopping, container, false);
+        View v = inflater.inflate(R.layout.fragment_order_notopping, container, false);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
+
+        name = (TextView) v.findViewById(R.id.tvOrdernotopping);
+        soluong = (TextView) v.findViewById(R.id.tvQuantitynotopping);
+
+        gia = (TextView) v.findViewById(R.id.tvPricenotopping);
+
+        m = (TextView) v.findViewById(R.id.sizeMnotopping);
+        l = (TextView) v.findViewById(R.id.sizeLnotopping);
+
+        bund = getArguments(); // lấy giá trị, có số bàn
+        tableId = bund.getString("soban");
+        masp = bund.getString("MASP");
+        theloai = bund.getString("theloai");
+
+        add = (ImageView) v.findViewById(R.id.btnAddnotopping);
+        remove = (ImageView) v.findViewById(R.id.btnRemovenotopping);
+        image = (ImageView) v.findViewById(R.id.imgOdernotopping);
+
+        sl = 1;
+
+        bm = true;
+        bl = false;
+
+        ImageLoader.Load("images/goods/" + masp + ".jpg", image);
+
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sl++;
+                soluong.setText(String.valueOf(sl));
+                if (bm)
+                    gia.setText(String.valueOf(sl*( bund.getInt("GIA")   ) ));
+                else
+                    gia.setText(String.valueOf(sl*( bund.getInt("GIA")   + 5000 ) ));
+            }
+        });
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (sl>1)
+                {
+                    sl--;
+                    soluong.setText(String.valueOf(sl));
+
+                    if (bm)
+                        gia.setText(String.valueOf(sl*( bund.getInt("GIA")   ) ));
+                    else
+                        gia.setText(String.valueOf(sl*( bund.getInt("GIA")  + 5000 ) ));
+                }
+            }
+        });
+
+//
+
+        m.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( bl )
+                {
+                    size = "M";
+                    gia.setText(String.valueOf(sl*( bund.getInt("GIA")   ) ));
+                    bm = true;
+                    m.setTextColor(Color.parseColor("#ffffff"));
+                    m.setBackgroundResource(R.drawable.round_bg);
+
+                    bl = false;
+                    l.setText("L");
+                    l.setTextColor(Color.parseColor("#000000"));
+                    l.setBackgroundResource(R.drawable.round_bg_white);
+
+                }
+            }
+        });
+
+        l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( bm )
+                {
+                    size = "L";
+                    gia.setText(String.valueOf(sl*( bund.getInt("GIA") + 5000  ) ));
+                    bl = true;
+                    l.setTextColor(Color.parseColor("#ffffff"));
+                    l.setBackgroundResource(R.drawable.round_bg);
+
+                    bm = false;
+                    m.setText("M");
+                    m.setTextColor(Color.parseColor("#111111"));
+                    m.setBackgroundResource(R.drawable.round_bg_white);
+
+                }
+            }
+        });
+
+        name.setText(bund.getString("TENSP"));
+        gia.setText(String.valueOf(bund.getInt("GIA")));
+
+        btnthemngay = (Button) v.findViewById(R.id.btnOrderNownotopping);
+        btnthemngay.setOnClickListener(new View.OnClickListener() { // tên(size), số lượng ,topping, số bàn
+            @Override
+            public void onClick(View view) {
+                saveFoodOrderIntoAFile();
+
+                getActivity().onBackPressed();
+            }
+        });
+
+        // Xử lý nút back
+        ((ImageView)v.findViewById(R.id.backno)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        return v;
     }
+
+    private void saveFoodOrderIntoAFile() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("sp_ref_name", db.collection(theloai).document(masp));
+        map.put("SIZE", size);
+        map.put("SOLUONG", Long.parseLong(soluong.getText().toString()));
+        map.put("DONE", false);
+        map.put("GIA", Long.parseLong(gia.getText().toString()));
+
+
+        db.collection("/TableStatus/" + tableId + "/DrinksOrder").add(map)
+                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                        Map<String, Object> queue = new HashMap<>();
+                        queue.put("food_name", db.collection("/TableStatus/" + tableId + "/DrinksOrder/").document(task.getResult().getId()));
+                        queue.put("TIME", instance.getTimeInMillis() / 1000);
+                        db.collection("/FoodQueue").add(queue);
+                    }
+                });
+    }
+
+
 }

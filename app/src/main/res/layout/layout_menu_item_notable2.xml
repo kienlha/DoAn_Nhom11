@@ -81,11 +81,11 @@
 
                 <ImageView
                     android:id="@+id/btnupdate"
+                    android:alpha="0.8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:alpha="0.8"
                     android:src="@drawable/ic_info" />
             </RelativeLayout>
         </LinearLayout>
