@@ -1,12 +1,34 @@
 package com.example.doannhom11;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,10 +77,51 @@ public class Fragment_item_edit extends Fragment {
         }
     }
 
+    EditText edtNameDrink, edtPrice;
+    ImageView imgDrink;
+    Button btnSaveDrink;
+    String query = "";
+
+    FirebaseAuth mAuth;
+    DocumentReference db;
+
+    private ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK)
+                    {
+                        Uri data = result.getData().getData();
+                        imgDrink.setImageURI(data);
+                    }
+                }
+            });
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_item_edit, container, false);
+        View v = inflater.inflate(R.layout.fragment_item_edit, container, false);
+
+        edtNameDrink = (EditText)v.findViewById(R.id.edtNameDrink);
+        edtPrice = (EditText)v.findViewById(R.id.edtPrice);
+        imgDrink = (ImageView) v.findViewById(R.id.imgEditDink);
+        btnSaveDrink = (Button) v.findViewById(R.id.btnSaveDrink);
+
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance().document("CUAHANG/" + mAuth.getUid());
+
+        // thay đổi ảnh item
+        imgDrink.setOnClickListener(view -> {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryIntent.setType("image/*");
+            launcher.launch(galleryIntent);
+        });
+
+        btnSaveDrink.setOnClickListener(view -> {
+            ImageLoader.Upload("images/goods/", imgDrink);
+            // push du lieu len firebase storage
+        });
+
+        return v;
     }
 }
