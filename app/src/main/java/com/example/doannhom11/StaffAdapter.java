@@ -1,4 +1,4 @@
-package com.example.coffee_cake;
+package com.example.doannhom11;
 
 import android.content.Context;
 import android.net.Uri;
@@ -24,14 +24,14 @@ class Staff {
     private String email;
 
     public Staff(String ma_nha_vien,
-                String ho_va_ten,
-                String ngay_thang_nam_sinh,
-                String gioi_tinh,
-                String so_dien_thoai,
-                String ngay_vao_lam,
-                String chuc_vu,
-                String cccd_cmnd,
-                String email) {
+                 String ho_va_ten,
+                 String ngay_thang_nam_sinh,
+                 String gioi_tinh,
+                 String so_dien_thoai,
+                 String ngay_vao_lam,
+                 String chuc_vu,
+                 String cccd_cmnd,
+                 String email) {
         MANV = ma_nha_vien;
         HOTEN = ho_va_ten;
         NGAYSINH = ngay_thang_nam_sinh;
