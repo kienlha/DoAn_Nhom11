@@ -61,7 +61,11 @@
                 android:src="@drawable/ic_camera_alt"
                 app:riv_oval="true">
             </com.makeramen.roundedimageview.RoundedImageView>
+
+
         </RelativeLayout>
+
+
         <EditText
             android:id="@+id/edtName"
             android:layout_gravity="center"
@@ -73,27 +77,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+
         <LinearLayout
-            android:weightSum="8"
-            android:layout_marginTop="4dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:weightSum="8">
+
             <LinearLayout
-                android:layout_weight="4"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <TextView
-                    android:text="Chức vụ"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dennhat"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Chức vụ"
+                    android:textColor="@color/dennhat"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <!--                Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
                 <!--                1. Admin-->
@@ -103,72 +110,87 @@
                 <!--                    android:id="@+id/spinner"-->
                 <!--                    android:layout_width="match_parent"-->
                 <!--                    android:layout_height="wrap_content" />-->
-                <EditText
-                    android:id="@+id/editPosition"
-                    android:hint="Nhập vào"
-                    android:background="@null"
-                    android:textSize="18sp"
-                    android:padding="12dp"
-                    android:gravity="center"
-                    android:spinnerMode="dropdown"
-                    android:textColor="@color/dennhat"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/editPosition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/dennhat"
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-40dp"
+                        android:src="@drawable/ic_arrow_drop_down"></ImageView>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+
             <ImageView
-                android:layout_weight="0"
-                android:layout_gravity="center"
-                android:background="#ccc"
                 android:layout_width="2dp"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:background="#ccc" />
 
             <LinearLayout
-                android:layout_weight="4"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <TextView
-                    android:text="Giới tính"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/dennhat"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:text="Giới tính"
+                    android:textColor="@color/dennhat"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <!--   Giới tính,Sử dụng Spinner để khi ấn vào nút tam giác nó sẽ xổ ra các lựa chọn-->
                 <!--   1. Nam-->
                 <!--   2. Nữ-->
                 <!--   3. Khác-->
                 <LinearLayout
-                    android:layout_marginTop="12dp"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
                     <Spinner
                         android:id="@+id/editGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:textColor="@color/dennhat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
                     <ImageView
-                        android:layout_marginLeft="-40dp"
-                        android:src="@drawable/ic_arrow_drop_down"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-40dp"
+                        android:src="@drawable/ic_arrow_drop_down"></ImageView>
 
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
-
 
         <ScrollView
             android:layout_width="match_parent"
@@ -202,102 +224,104 @@
                 </LinearLayout>
 
 
-
                 <EditText
                     android:id="@+id/edtCCCD"
-                    android:layout_marginTop="8dp"
-                    android:padding="12dp"
-                    android:inputType="numberSigned"
-                    android:background="@drawable/round_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp" />
-                <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
+                    android:background="@drawable/round_edt"
+                    android:inputType="numberSigned"
+                    android:padding="12dp"
+                    android:textSize="18sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cake"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_marginRight="8dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_cake"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ngày sinh:"
-                        android:textColor="@color/dennhat"
-                        android:textSize="18sp"/>
-                </LinearLayout>
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày sinh:"
+                    android:textColor="@color/dennhat"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
                 <EditText
                     android:id="@+id/edtDob"
-                    android:layout_marginTop="8dp"
-                    android:padding="12dp"
-                    android:background="@drawable/round_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_edt"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:textSize="18sp" />
+                    android:padding="12dp"
+                    android:textSize="18sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic__date_range"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_marginRight="8dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic__date_range"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ngày vào làm:"
-                        android:textColor="@color/dennhat"
-                        android:textSize="18sp"/>
-                </LinearLayout>
+                </ImageView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày vào làm:"
+                    android:textColor="@color/dennhat"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
 
                 <EditText
                     android:id="@+id/edtBeginDate"
-                    android:background="@drawable/round_edt"
-                    android:padding="12dp"
-                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_edt"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:textSize="18sp" />
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
+                    android:padding="12dp"
+                    android:textSize="18sp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_phone"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_marginRight="8dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
+                </ImageView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Số điện thoại:"
-                        android:textColor="@color/dennhat"
-                        android:textSize="18sp"/>
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số điện thoại:"
+                    android:textColor="@color/dennhat"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
                 <EditText
                     android:id="@+id/edtPhone"
@@ -308,35 +332,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18sp" />
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginRight="8dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_baseline_mail_24"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:layout_marginRight="8dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_mail_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </ImageView>
+                </ImageView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email:"
-                        android:textColor="@color/dennhat"
-                        android:textSize="18sp"/>
-                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email:"
+                    android:textColor="@color/dennhat"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
                 <EditText
                     android:id="@+id/edtHSL"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/round_edt"
-                    android:padding="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp" />
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/round_edt"
+                    android:inputType="textEmailAddress"
+                    android:padding="12dp"
+                    android:textSize="18sp"
+                    android:maxLines="1"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
         </ScrollView>
 
@@ -350,5 +377,10 @@
             android:textSize="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+
     </LinearLayout>
+
+
+
 </FrameLayout>
