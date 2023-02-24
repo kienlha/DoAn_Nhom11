@@ -406,7 +406,7 @@ public class Fragment_statistic extends Fragment {
 
         if (instance.get(Calendar.MONTH) < 1)
         {
-            CToast.i(getActivity(), "No Data!", Toast.LENGTH_SHORT);
+            CustomToast.i(getActivity(), "No Data!", Toast.LENGTH_SHORT);
             return;
         }
 
@@ -479,7 +479,7 @@ public class Fragment_statistic extends Fragment {
                             barChart.invalidate();
                         }
                         else
-                            CToast.e(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT);
+                            CustomToast.e(getActivity(), "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT);
                     }
                 });
     }
